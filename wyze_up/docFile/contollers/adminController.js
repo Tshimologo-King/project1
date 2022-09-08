@@ -5,7 +5,7 @@ require("dotenv").config();
 
 //ADD NEW CAREERS, EDIT CAREERS + DELETE
 async function addCareers(req, res){
-    if (req.users.userType === "admin") {
+
         const {
           idCareers,
           careerTitle,
@@ -28,13 +28,9 @@ async function addCareers(req, res){
           console.log(error);
           res.status(400).send(error);
         }
-    } else {
-        res.send("Not authorised");
     }
-}
-
 async function editCareers(req, res) {
-    if (req.users.userType === "admin") {
+
         const {
           careerTitle,
           careerIndustry,
@@ -46,7 +42,8 @@ async function editCareers(req, res) {
 
         try {
           connection.query(
-            `UPDATE Careers SET careerTitle = "${careerTitle}", careerIndustry = "${careerIndustry}", careerDescription = "${careerDescription}", careerURLImage = "${careerURLImage}", institutions = "${institutions}",careerDayInLife = "${careerDayInLife}" WHERE idCareers=${req.params.id}`,
+            `UPDATE Careers SET careerTitle = "${careerTitle}", careerIndustry = "${careerIndustry}", careerDescription = "${careerDescription}", careerURLImage = "${careerURLImage}", institutions = "${institutions}",careerDayInLife = "${careerDayInLife}" WHERE id
+            =${req.params.id}`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -57,13 +54,13 @@ async function editCareers(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 async function deleteCareers(req, res) {
-    if (req.users.userType === "admin") {
+
         try {
           connection.query(
-            `DELETE FROM Careers WHERE career_id=${req.params.id}`,
+            `DELETE FROM careers WHERE id=${req.params.id}`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -74,11 +71,11 @@ async function deleteCareers(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 //ADD NEW POSTS, EDIT POSTS + DELETE
 async function addPosts(req, res) {
-    if (req.users.userType === "admin") {
+
         const { postDescription, postTitle, author } = req.body;
         try {
           connection.query(
@@ -93,15 +90,15 @@ async function addPosts(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 async function editPosts(req, res) {
-    if (req.User.userType === "admin") {
+
         const { postTitle, postDescription, author } = req.body;
         
         try {
           connection.query(
-            `UPDATE Posts SET postTitle = "${postTitle}}", postDescription = "${postDescription}", author="${author}" WHERE idPosts=${req.params.id}`,
+            `UPDATE Posts SET postTitle = "${postTitle}}", postDescription = "${postDescription}", author="${author}" WHERE id=${req.params.id}`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -112,13 +109,13 @@ async function editPosts(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 async function deletePosts(req, res) {
-    if (req.User.userType === "admin") {
+
         try {
           connection.query(
-            `DELETE FROM Posts WHERE idPosts=${req.params.id}`,
+            `DELETE FROM Posts WHERE id=${req.params.id}`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -129,16 +126,16 @@ async function deletePosts(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 //ADD NEW PODCAST, EDIT + DELETE PODCASTS
 async function addPodcasts(req, res) {
-    if (req.users.userType === "admin") {
-        const { idPodcasts, podcastTitle, podcastLink, podTranscript } = req.body;
+  
+        const { idPodcasts, podcastTitle, podcastLink, podcastDocument } = req.body;
 
         try {
         connection.query(
-            `INSERT INTO Podcasts (idPodcasts, podcastTitle, podcastLink, podTranscript) VALUES ("${idPodcasts}","${podcastTitle}", "${podcastLink}", "${podTranscript}")`,
+            `INSERT INTO Podcasts (id, podcastTitle, podcastLink, podcastDocument) VALUES ("${id}","${podcastTitle}", "${podcastLink}", "${podcastDocument}")`,
             (err, result) => {
             if (err) throw err;
             res.send(result);
@@ -149,14 +146,13 @@ async function addPodcasts(req, res) {
         res.status(400).send(error);
         }
     }
-}
+
 
 async function editPodcasts(req, res) {
-    if (req.users.userType === "admin") {
-        const { podcastTitle, podcastLink, podTranscript } = req.body;
+        const { podcastTitle, podcastLink, podcastTranscript } = req.body;
         try {
           connection.query(
-            `UPDATE Podcasts SET podcastTitle = "${podcastTitle}", podcastLink = "${podcastLink}", podTranscript = "${podTranscript}" WHERE idPodcasts=${req.params.id}`,
+            `UPDATE Podcasts SET podcastTitle = "${podcastTitle}", podcastLink = "${podcastLink}", podcastTranscript = "${podcastTranscript}" WHERE id=${req.params.id}`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -167,13 +163,12 @@ async function editPodcasts(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 async function deletePodcasts(req, res) {
-    if (req.users.userType === "admin") {
         try {
           connection.query(
-            `DELETE FROM Podcasts WHERE idPodcasts=${req.params.id}`,
+            `DELETE FROM Podcasts WHERE id=${req.params.id}`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -184,15 +179,14 @@ async function deletePodcasts(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 //ADD NEW ARTICLES, EDIT + DELETE ARTICLES
 async function addArticles(req, res) {
-    if(req.users.userType === "admin") {
-        const { idArticle, articleHeading, articleDescription, author } = req.body;
+        const { id, articleHeading, articleDescription, author } = req.body;
         try {
           connection.query(
-            `INSERT INTO Article (idArticle, articleHeading, articleDescription, author) VALUES ("${idArticle}","${articleHeading}", "${articleDescription}", "${author}")`,
+            `INSERT INTO Article (id, articleHeading, articleDescription, author) VALUES ("${id}","${articleHeading}", "${articleDescription}", "${author}")`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -203,14 +197,13 @@ async function addArticles(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 async function editArticle(req, res) {
-    if (req.users.userType === "admin") {
         const { articleHeading, articleDescription, author } = req.body;
         try {
           connection.query(
-            `UPDATE Article SET articleHeading = "${articleHeading}", articleDescription = "${articleDescription}", author = "${author}" WHERE idArticle=${req.params.id}`,
+            `UPDATE Article SET articleHeading = "${articleHeading}", articleDescription = "${articleDescription}", author = "${author}" WHERE id=${req.params.id}`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -221,13 +214,12 @@ async function editArticle(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 async function deleteArticle(req, res) {
-    if (req.users.userType === "admin") {
         try {
           connection.query(
-            `DELETE FROM Article WHERE idArticle=${req.params.id}`,
+            `DELETE FROM Article WHERE id=${req.params.id}`,
             (err, result) => {
               if (err) throw err;
               res.send(result);
@@ -238,7 +230,7 @@ async function deleteArticle(req, res) {
           res.status(400).send(error);
         }
     }
-}
+
 
 module.exports = {
     addCareers, editCareers, deleteCareers, addPosts, editPosts, deletePosts, addArticles, editArticle, deleteArticle, addPodcasts, editPodcasts, deletePodcasts,
